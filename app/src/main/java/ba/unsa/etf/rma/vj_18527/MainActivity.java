@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button pretraga;
-    private ListView lista;
-    private EditText poljeUnosa;
+    private Button button;
+    private ListView listView;
+    private EditText editText;
     private ArrayList<String> entries;
-    private ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, entries);
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +25,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        pretraga = (Button) findViewById(R.id.searchBtn);
-        lista = (ListView) findViewById(R.id.listView);
-        poljeUnosa = (EditText) findViewById(R.id.imeFilmaField);
+        button = (Button) findViewById(R.id.button);
+        listView = (ListView) findViewById(R.id.listView);
+        editText = (EditText) findViewById(R.id.editText);
         entries = new ArrayList<String>();
 
-        lista.setAdapter(adapter);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, entries);
 
-        pretraga.setOnClickListener(new View.OnClickListener() {
+        listView.setAdapter(adapter);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = String.valueOf(poljeUnosa.getText());
-                entries.add(s);
-
+                entries.add(0, editText.getText().toString());
+                adapter.notifyDataSetChanged();
+                editText.setText("");
             }
         });
     }
